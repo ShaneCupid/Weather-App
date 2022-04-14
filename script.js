@@ -1,33 +1,55 @@
-// const btn =  document.getElementsById('show-weather');
-// const input = document.getElementsById('zipcode');
+//const btn =  document.getElementById('show-weather');
+//const input = document.getElementById('zipcode');
 
-var button = document.querySelector('.show-weather')
-var zipcode = document.querySelector('.zipcode')
-var name = document.querySelector('.city-name')
-var lat = document.querySelector('.lat')
-var lon = document.querySelector('.lon')
-var main = document.querySelector('.weather-main')
-var weatherDesc = document.querySelector('.weather-desc')
-var speed = document.querySelector('.wind-speed')
-var degree = document.querySelector('.wind-degree')
-var current = document.querySelector('.temp-current')
-var mimimum = document.querySelector('.temp-min')
-var maximum = document.querySelector('.temp-max')
-var humidity = document.querySelector('.humidity')
+const btn = document.getElementById("show-weather")
+let zipcode = document.getElementById('zipcode')
+let name = document.getElementById('city-name')
+let latitude = document.getElementById('lat')
+let longitude = document.getElementById('lon')
+let main = document.getElementById('weather-main')
+let weatherDesc = document.getElementById('weather-desc')
+let windSpeed = document.getElementById('wind-speed')
+let windDegree = document.getElementById('wind-degree')
+let current = document.getElementById('temp-current')
+let minimum = document.getElementById('temp-min')
+let maximum = document.getElementById('temp-max')
+let humid = document.getElementById('humidity')
 
+btn.addEventListener('click', () => generateWeather())
+function generateWeather() {
 
-//fetch('https:api.openweathermap.org/data/2.5/weather?zip='+input.value+'1a21a53fe38f88cc2066bc04b132dffe')
-fetch('https:api.openweathermap.org/data/2.5/weather?zip=${zip},us&appid=${1a21a53fe38f88cc2066bc04b132dffe}'
- .then(response => response.json()
- .then(data => console.log(data))
+const bijayboy = zipcode.value
+  fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${bijayboy},us&units=imperial&appid=1a21a53fe38f88cc2066bc04b132dffe`)
+   .then(response => response.json())
+   .then(data => {
 
-btn.addEventListener('click', () => {
-  btn = input.innerHTML
-  showWeather()
-});
+     if(data.name==null){
+      alert(data.message+ "" +data.cod+ "" + "boy try again")
+}
+      else{
 
-// async function showWeather() {
-//   const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip code},{country code}&appid=${1a21a53fe38f88cc2066bc04b132dffe}`)
-//   const data = await response.json()
-//   console.log
+     console.log(data)
+name.innerHTML = data.name
+longitude.innerHTML = data.coord.lon
+latitude.innerHTML = data.coord.lat
+//main.innerHTML = data.weather[0].id
+main.innerHTML = data.weather[0].main
+weatherDesc.innerHTML = data.weather[0].description
+//main.innerHTML = data.weather[0].icon
+current.innerHTML = data.main.temp
+minimum.innerHTML = data.main.temp_min
+maximum.innerHTML = data.main.temp_max
+humid.innerHTML = data.main.humidity
+windSpeed.innerHTML = data.wind.speed
+windDegree.innerHTML = data.wind.deg
+}})
+}
+// async function generateWeather(zipcode) {
+//    bijayboy = zipcode.value
+//   const responses = await fetch (`https://api.openweathermap.org/data/2.5/weather?zip=${bijayboy},us&units=imperial&appid=1a21a53fe38f88cc2066bc04b132dffe`)
+//
+//  if(responses.status<=00501 || responses.status>99950){
+//   alert("Zipcode is invalid my boy!");
+// }
+// const data = await response.json()
 // }
